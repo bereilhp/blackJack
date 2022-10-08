@@ -1,2 +1,3 @@
 # blackJack
-BlackJack with Prolog
+
+Creating the famous game BlackJack using Prolog
