@@ -5,6 +5,12 @@
 carta(X,Y) :-
     cartas(X,Y).
 
+sumaCarta(X,Y) :-
+    cartas(X,T),
+    cartas(Y,G),    
+    S is T + G,
+    write(S).
+    
 % Facts
 
 cartas(1,1). % Carta y su valor
@@ -21,4 +27,5 @@ cartas(j,10).
 cartas(q,10).
 cartas(k,10).
 cartas(a,1).
-cartas(a,11).
+
+
