@@ -2,17 +2,39 @@
 % ; = OR
 % , = AND
 
-carta(X,Y) :-
-    cartas(X,Y).
+ carta(X,S) :-
+    cartas(X,S).
 
-sumaCarta(X,Y) :-
-    cartas(X,T),
-    cartas(Y,G),    
-    S is T + G,
-    write(S).
+
+sumaCarta(X,Y, S) :-
+   cartas(X,T),
+   cartas(Y,G),   
+    S is T + G.
+
+manoCartas([],0).
+
+manoCartas([X|Y],S):-   
+   carta(X,P),
+   manoCartas(Y, M),
+   S is P + M.
+
+
+
+pierde(X, Y, Z) :-
+    sumaCarta(X,Y,Z), 
+    Z > 11.
+
+read_animal(X) :-
+  write('please type animal name:'),
+  nl,
+  read(X).
+
+
     
 % Facts
 
+animal(perro).
+animal(gato).
 cartas(1,1). % Carta y su valor
 cartas(2,2).
 cartas(3,3).
