@@ -11,12 +11,35 @@ sumaCarta(X,Y, S) :-
    cartas(Y,G),   
     S is T + G.
 
+
+% pedir cartas
+
 manoCartas([],0).
 
+% cartas que tiene el jugador en su mano
 manoCartas([X|Y],S):-   
    carta(X,P),
    manoCartas(Y, M),
    S is P + M.
+
+% añadir carta en la mano
+pedirCarta([X|Y], Num, P) :-
+  manoCartas([X|Y],S),
+  P is S + Num.
+
+
+
+% Caso pierde
+pierde([X|Y],S):-
+  manoCartas([X|Y],M),
+  M > 21,
+  M > 21 -> write("Suma más de 21");
+  write("Sigue jugando").
+
+
+% caso gana 
+
+
 
 
 
