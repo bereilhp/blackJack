@@ -1,4 +1,4 @@
-% Rules
+%Rules
 % ; = OR
 % , = AND
 
@@ -16,7 +16,6 @@ manoCartas([X|Y],S):-
    S is P + M.
 
 % Comparar dos jugadores
-
 jugadores([X|Y], [Z|A]) :-
   manoCartas([X|Y], S),
   manoCartas([Z|A], T),
@@ -26,7 +25,15 @@ jugadores([X|Y], [Z|A]) :-
   write("Jugador dos tiene  = "),
   write(T).
 
+% Repartir cartas random
 
+random_Cards(Num) :-
+  random(0, 10, N),
+  cartas(N, Num).
+
+random_Cards(A) :-
+  random_Cards(A),
+  !.
 
 % Añadir carta en la mano del jugarod de una en una
 pedirCarta([X|Y], Num, P) :-
@@ -46,14 +53,10 @@ ganar([X|Y]) :-
   S < 21,
   write("Felicidades has ganado la ronda").
 
-
-
-    
-% Facts
-
-animal(perro).
-animal(gato).
-cartas(1,1). % Carta y su valor
+ 
+%Facts
+agregar_inicio(E,L1,[E|L1]).
+cartas(1,1). % Es la carta A
 cartas(2,2).
 cartas(3,3).
 cartas(4,4).
@@ -62,10 +65,7 @@ cartas(6,6).
 cartas(7,7).
 cartas(8,8).
 cartas(9,9).
-cartas(10,10).
-cartas(j,10).
-cartas(q,10).
-cartas(k,10).
-cartas(a,1).
+cartas(10,10). % dentro contiene J, Q, K
+
 
 
