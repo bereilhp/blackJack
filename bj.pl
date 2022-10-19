@@ -2,21 +2,20 @@
 % ; = OR
 % , = AND
 
-% saber el valor de cada carta ya que tenemos cartas que tienen figura 
+% Este predicado te devuelve el  valor de cada carta
 carta(X,S) :-
   cartas(X,S).
 
-% pedir cartas
+% Cuando el jugador no tiene cartas en la mano
 manoCartas([],0).
 
-% Cartas que tiene el jugador en su mano
+% Suma el valor de cada una de las cartas que tiene el jugador en su mano
 manoCartas([X|Y],S):-   
    carta(X,P),
    manoCartas(Y, M),
    S is P + M.
 
-% Comparar dos jugadores
-
+% Devuelve la suma del valor total de la mano de los dos jugadores
 jugadores([X|Y], [Z|A]) :-
   manoCartas([X|Y], S),
   manoCartas([Z|A], T),
@@ -26,27 +25,48 @@ jugadores([X|Y], [Z|A]) :-
   write("Jugador dos tiene  = "),
   write(T).
 
+% Genera cartas aleatorias
+random_Cards(Num) :-
+  random(0, 10, N),
+  cartas(N, Num).
+
+% El jugador al principio solo tendra dos cartas
+random_Cards(Num, Nm, S) :-
+  random(0, 10, N),
+  cartas(N, Num),
+  random(0, 10, T),
+  cartas(T, Nm),
+  S = [Num | Nm ].
 
 
-% Añadir carta en la mano del jugarod de una en una
+% Guarda dos cartas random
+% random_Cards(S) :-
+%  T = Num,
+%  write(T),
+%  % C = Num1,
+%  % S = [T|C],
+%  write(S),
+%  !.
+
+
+% Añadir carta en la mano de un jugador de una en una
 pedirCarta([X|Y], Num, P) :-
   manoCartas([X|Y],S),
   P is S + Num.
 
-% Caso pierde si suma mas de 21 si no es el caso seguir jugando
+% Caso pierde si suma mas de 21, si no, sigue jugando
 pierde([X|Y]):-
   manoCartas([X|Y],M),
   M > 21,
   M > 21 -> write("Suma más de 21. Has perdido");
   write("Sigue jugando").
 
-% caso gana
+% caso gana inmediatamente
 ganar([X|Y]) :-
   manoCartas([X|Y],S),
-  S < 21,
-  write("Felicidades has ganado la ronda").
+  S < 21 -> write("Felicidades has ganado la ronda").
 
-
+% caso empate
 empate([X|Y], [Z|A]) :-
   sum_list([X|Y], M),
   sum_list([Z|A], P),
@@ -54,11 +74,12 @@ empate([X|Y], [Z|A]) :-
   U =:= 0 -> write("EMPATE!"), 
   write("\n").
 
-ganaJugador([X|Y], [Z|A]) :-
-  sum_list([X|Y], M),
-  sum_list([Z|A], P),
+% caso gana cuando ninguno de los dos jugadores llega a 21 
+ganaJugador([D|E], [F|G]) :-
+  sum_list([D|E], M),
+  sum_list([F|G], P),
   M > P -> write("Ha ganado el jugador1!"),
-  M < P, write('Ha ganado el jugador 2! ').
+  M < P; write('Ha ganado el jugador 2! ').
  
 
 
