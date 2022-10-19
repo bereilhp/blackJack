@@ -53,12 +53,10 @@ ganar([X|Y]) :-
   S < 21,
   write("Felicidades has ganado la ronda").
 
-<<<<<<< HEAD
  
 %Facts
 agregar_inicio(E,L1,[E|L1]).
 cartas(1,1). % Es la carta A
-=======
   empate([X|Y], [Z|A]) :-
   sum_list([X|Y], M),
   sum_list([Z|A], P),
@@ -75,10 +73,7 @@ ganaJugador([X|Y], [Z|A]) :-
     
 % Facts
 
-animal(perro).
-animal(gato).
 cartas(1,1). % Carta y su valor
->>>>>>> a1e6487b2687d2d9d92028f4e6a369a17ef3be4c
 cartas(2,2).
 cartas(3,3).
 cartas(4,4).
