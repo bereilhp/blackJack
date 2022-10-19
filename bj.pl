@@ -46,7 +46,18 @@ ganar([X|Y]) :-
   S < 21,
   write("Felicidades has ganado la ronda").
 
+  empate([X|Y], [Z|A]) :-
+  sum_list([X|Y], M),
+  sum_list([Z|A], P),
+  U is  (M - P),
+  U =:= 0 -> write("EMPATE!"), 
+  write("\n").
 
+ganaJugador([X|Y], [Z|A]) :-
+  sum_list([X|Y], M),
+  sum_list([Z|A], P),
+  M > P -> write("Ha ganado el jugador1!"),
+  M < P, write('Ha ganado el jugador 2! ').
 
     
 % Facts
