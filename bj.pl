@@ -2,62 +2,70 @@
 % ; = OR
 % , = AND
 
- carta(X,S) :-
-    cartas(X,S).
-
-
-sumaCarta(X,Y, S) :-
-   cartas(X,T),
-   cartas(Y,G),   
-    S is T + G.
-
+% saber el valor de cada carta ya que tenemos cartas que tienen figura 
+carta(X,S) :-
+  cartas(X,S).
 
 % pedir cartas
-
 manoCartas([],0).
 
-% cartas que tiene el jugador en su mano
+% Cartas que tiene el jugador en su mano
 manoCartas([X|Y],S):-   
    carta(X,P),
    manoCartas(Y, M),
    S is P + M.
 
-% añadir carta en la mano
+% Comparar dos jugadores
+
+jugadores([X|Y], [Z|A]) :-
+  manoCartas([X|Y], S),
+  manoCartas([Z|A], T),
+  write("Jugador uno tiene  = "),
+  write(S),
+  write("\n"),
+  write("Jugador dos tiene  = "),
+  write(T).
+
+
+
+% Añadir carta en la mano del jugarod de una en una
 pedirCarta([X|Y], Num, P) :-
   manoCartas([X|Y],S),
   P is S + Num.
 
-
-
-% Caso pierde
-pierde([X|Y],S):-
+% Caso pierde si suma mas de 21 si no es el caso seguir jugando
+pierde([X|Y]):-
   manoCartas([X|Y],M),
   M > 21,
-  M > 21 -> write("Suma más de 21");
+  M > 21 -> write("Suma más de 21. Has perdido");
   write("Sigue jugando").
 
+% caso gana
+ganar([X|Y]) :-
+  manoCartas([X|Y],S),
+  S < 21,
+  write("Felicidades has ganado la ronda").
 
-% caso gana 
 
+empate([X|Y], [Z|A]) :-
+  sum_list([X|Y], M),
+  sum_list([Z|A], P),
+  U is  (M - P),
+  U =:= 0 -> write("EMPATE!"), 
+  write("\n").
 
+ganaJugador([X|Y], [Z|A]) :-
+  sum_list([X|Y], M),
+  sum_list([Z|A], P),
+  M > P -> write("Ha ganado el jugador1!"),
+  M < P, write('Ha ganado el jugador 2! ').
+ 
 
-
-
-pierde(X, Y, Z) :-
-    sumaCarta(X,Y,Z), 
-    Z > 11.
-
-read_animal(X) :-
-  write('please type animal name:'),
-  nl,
-  read(X).
 
 
     
 % Facts
 
-animal(perro).
-animal(gato).
 cartas(1,1). % Carta y su valor
 cartas(2,2).
 cartas(3,3).
@@ -72,5 +80,3 @@ cartas(j,10).
 cartas(q,10).
 cartas(k,10).
 cartas(a,1).
-
-
