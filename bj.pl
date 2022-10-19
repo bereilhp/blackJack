@@ -2,42 +2,34 @@
 % ; = OR
 % , = AND
 
- carta(X,S) :-
-    cartas(X,S).
-
-
-sumaCarta(X,Y, S) :-
-   cartas(X,T),
-   cartas(Y,G),   
-    S is T + G.
-
+% saber el valor de cada carta ya que tenemos cartas que tienen figura 
+carta(X,S) :-
+  cartas(X,S).
 
 % pedir cartas
 
 manoCartas([],0).
 
-% cartas que tiene el jugador en su mano
+% Cartas que tiene el jugador en su mano
 manoCartas([X|Y],S):-   
    carta(X,P),
    manoCartas(Y, M),
    S is P + M.
 
-% añadir carta en la mano
+% Añadir carta en la mano del jugarod de una en una
 pedirCarta([X|Y], Num, P) :-
   manoCartas([X|Y],S),
   P is S + Num.
 
-
-
-% Caso pierde
+% Caso pierde si suma mas de 21 si no es el caso seguir jugando
 pierde([X|Y],S):-
   manoCartas([X|Y],M),
   M > 21,
-  M > 21 -> write("Suma más de 21");
+  M > 21 -> write("Suma más de 21. Has perdido");
   write("Sigue jugando").
 
-
 % caso gana 
+
 
 
 
