@@ -15,25 +15,16 @@ manoCartas([X|Y],S):-
    manoCartas(Y, M),
    S is P + M.
 
+% Comparar dos jugadores
 
-manoCartasJ2([Cabeza1|J], [Cabeza2|G], SumCartasJugador1, SumCartasJugador2) :-
-  carta(Cabeza1, X),
-  write(X),
-  write(" "),
-  carta(Cabeza2, Y),
-  write(Y),
-  write(" "),
-  write(J),
-  manoCartas(J, M),
-  write(M),
-  write(" "),
-  write(G),
-  carta([G], Pe),
-  write(Pe),
-  write(" "),
-  SumCartasJugador1 is X + suma1,
-
-  SumCartasJugador2 is Y + suma2.
+jugadores([X|Y], [Z|A]) :-
+  manoCartas([X|Y], S),
+  manoCartas([Z|A], T),
+  write("Jugador uno tiene  = "),
+  write(S),
+  write("\n"),
+  write("Jugador dos tiene  = "),
+  write(T).
 
 
 
