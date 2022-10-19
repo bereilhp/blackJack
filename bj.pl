@@ -7,7 +7,6 @@ carta(X,S) :-
   cartas(X,S).
 
 % pedir cartas
-
 manoCartas([],0).
 
 % Cartas que tiene el jugador en su mano
@@ -16,33 +15,46 @@ manoCartas([X|Y],S):-
    manoCartas(Y, M),
    S is P + M.
 
+
+manoCartasJ2([Cabeza1|J], [Cabeza2|G], SumCartasJugador1, SumCartasJugador2) :-
+  carta(Cabeza1, X),
+  write(X),
+  write(" "),
+  carta(Cabeza2, Y),
+  write(Y),
+  write(" "),
+  write(J),
+  manoCartas(J, M),
+  write(M),
+  write(" "),
+  write(G),
+  carta([G], Pe),
+  write(Pe),
+  write(" "),
+  SumCartasJugador1 is X + suma1,
+
+  SumCartasJugador2 is Y + suma2.
+
+
+
 % Añadir carta en la mano del jugarod de una en una
 pedirCarta([X|Y], Num, P) :-
   manoCartas([X|Y],S),
   P is S + Num.
 
 % Caso pierde si suma mas de 21 si no es el caso seguir jugando
-pierde([X|Y],S):-
+pierde([X|Y]):-
   manoCartas([X|Y],M),
   M > 21,
   M > 21 -> write("Suma más de 21. Has perdido");
   write("Sigue jugando").
 
-% caso gana 
+% caso gana
+ganar([X|Y]) :-
+  manoCartas([X|Y],S),
+  S < 21,
+  write("Felicidades has ganado la ronda").
 
-
-
-
-
-
-pierde(X, Y, Z) :-
-    sumaCarta(X,Y,Z), 
-    Z > 11.
-
-read_animal(X) :-
-  write('please type animal name:'),
-  nl,
-  read(X).
 
 
     
