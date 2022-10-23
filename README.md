@@ -16,6 +16,7 @@ swipl bj.pl
 ```
 
 # Un jugador contra el Dealer
+
 ## Para ejecutar el juego necesitamos ejecutar los siguientes comandos:
 
 - Para inicializar el juego ejecutaremos el siguiente comando:
@@ -48,7 +49,7 @@ Ejemplo
 ```
 pedirCarta([Carta1, Carta2]).
 ```
-- Este predicado te devolverá la nueva carta aleatoria y su suma con el resto de cartas que tienes en la mano. 
+- Este predicado te devolverá la nueva carta aleatoria y se sumará con el resto de cartas que tienes en la mano. 
 
 Ejemplo
 
@@ -90,14 +91,76 @@ plantar(15).
 
 ![plot](./imagenes/PlantarGanar.png)
 
-- Por último, si el dealer tiene un asuma de cartas mayor que el jugador, significa que el dealer ha ganado 
+- Por último, si el dealer tiene una suma de cartas mayor que el jugador, significa que el dealer ha ganado 
 
 ![plot](./imagenes/PlantarDealer1G.png)
 
+# Dos jugadores contra el Dealer
+
+## Para ejecutar el juego necesitamos ejecutar los siguientes comandos:
+
+- Para inicializar el juego ejecutaremos el siguiente comando:
+```
+iniciarJuego().
+```
+- Cuando se ejecute este comando te pedirá por consola que escribas "ok" (importante escribirlo con comillas y en minúscula y con punto incluido). para empezar el juego. Si escribes algo diferente se parará el juego. 
+
+Ejemplo 
+
+![plot](./imagenes/IniciarJuego.png)
+
+## Recibir primera mano para cada jugador.
+- Inicialmente cada jugador partirá con dos cartas. Para obtener las dos cartas tienen que ejecutar los siguientes comandos:
+````
+mano1(X,Y,S).
+````  
+````
+mano2(X,Y,S).
+`````
+
+- X es la primera carta 
+- Y es la segunda carta 
+- S es conjunto de cartas y su total.
+
+Ejemplo 
+
+![plot](./imagenes/Mano1Mano2.png)
+
+## Pedir carta usando la primera mano 
+
+- Para pedir una carta e insertarla en nuestra mano tenemos que ejecutar el siguiente comando: 
+```
+pedirCarta([Carta1, Carta2]).
+```
+- Este predicado te devolverá la nueva carta aleatoria y se sumará con el resto de cartas que tienes en la mano. 
+
+- Como podemos observar a continuación, tenemos que pedir cartas para cada jugador ya qu etienen manos diferentes y son independientes. 
+
+- Como es el mismo predicado aplican las mismas reglas que en el caso anterior. 
+
+Ejemplo
+
+![plot](./imagenes/pedirMano1y2.png)
+
+## Plantarse contra el dealer siendo dos jugadores
+
+- Si estas satisfecho con tus cartas y crees que puedes ganar al dealer entonces utiliza el comando:
+```
+plantar(18,15).
+```
+
+- Hay tres resultados posibles que son: empate, perder y ganar. 
+- Cuando un jugador y el dealer tienen la misma suma de cartas, se denomina empate. 
+
+![plot](./imagenes/EmpateDealerJugador2.png)
+
+![plot](./imagenes/EmpateJugador1Dealer.png)
 
 
+- Cuando el jugador tiene una suma de cartas mayor que el dealer, significa que el jugador ha gando esa ronda. 
 
+![plot](./imagenes/Jugador2GanaDealer.png)
 
+- Por último, si el dealer tiene una suma de cartas mayor que los jugadores, significa que el dealer ha ganado 
 
-
-
+![plot](./imagenes/plantar2GanaDealer.png)

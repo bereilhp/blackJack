@@ -54,7 +54,7 @@ mano2(Num, Nm, S) :-
   carta2(T),
   cartas(T, Nm),
   Resu is Num + Nm,
-  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para seguir jugando inserte el comando pedirCarta([cartas])"], S).
+  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para seguir jugando inserte el comando pedirCarta([Carta1, Carta2])"], S).
 
 
 % Suma el valor de cada una de las cartas que tiene el jugador en su mano
@@ -120,7 +120,7 @@ plantar2(Sol1, Sol2, Num) :-
   U =:= 0 -> write("Empate entre jugador 1 y Dealer con "),
   write(Num),
   nl,
-  empateJugador1(Sol1, Sol2),
+  empateJugador1(Sol2, Sol1),
   nl,
   write("Jugador 2 tenía "),
   write(Sol2); 
@@ -134,12 +134,12 @@ plantar2(Sol1, Sol2, Num) :-
   comprabarNumero(Sol1, Sol2, Num).
 
 empateJugador1(X, Y) :-
-  X < Y -> write("Jugador 1 ha perdido");
-  write("Jugador 1 ha ganado!").
-
-empateJugador2(X, Y) :-
   X < Y -> write("Jugador 2 ha perdido");
   write("Jugador 2 ha ganado!").
+
+empateJugador2(X, Y) :-
+  X < Y -> write("Jugador 1 ha perdido");
+  write("Jugador 1 ha ganado!").
 
 ganadorSegunPuntosDealer1(X, Dealer) :-
   X > Dealer -> write("Jugador 1 han ganado.");
