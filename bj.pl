@@ -3,14 +3,17 @@
 % , = AND
 
 :- discontiguous manoCartas/2.
+use_module(library(random)).
+
+
 
 % Comenzar el juego 
 comenzar() :-
 write("Bienvenido al juego BlackJack para empezar el juego tiene que escribir OK. en caso contrario escriba cualquier cosa"),
 nl,
 read(S),
-correcto(S) -> write("Para seguir jugando ejecute el comando manoCartasInicial(X,Y,S) y te mostrará tu primera mano");
-  write("Ha finalizado el juego").
+correcto(S) -> write("Para seguir jugando ejecute el comando manoCartasInicialJugador1(X,Y,S) o manoCartasInicialJugador2(X,Y,S)y te mostrará tu primera mano");
+  write("Ha finalizado el juego"). 
 
 % Este predicado te devuelve el  valor de cada carta
 carta(X,S) :-
@@ -18,6 +21,7 @@ carta(X,S) :-
 
 % Cuando el jugador no tiene cartas en la mano
 manoCartas([],0).
+
 
 % Genera cartas aleatorias
 random_Cards(Num) :-
@@ -35,12 +39,20 @@ carta2(Num) :-
   cartas(N, Num).
 
 % El jugador al principio solo tendra dos cartas
-manoCartasInicial(Num, Nm, S) :-
+manoCartasInicialJugador1(Num, Nm, S) :-
   carta1(N),
   cartas(N, Num),
   carta2(T),
   cartas(T, Nm),
-  S = [Num | Nm ].
+  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, ". Para seguir jugando inserte el comando pedirCarta([cartas], P)"], S).
+
+manoCartasInicialJugador2(Num, Nm, S) :-
+  carta1(N),
+  cartas(N, Num),
+  carta2(T),
+  cartas(T, Nm),
+  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, ". Para seguir jugando inserte el comando pedirCarta([Cartas], P)"], S).
+
 
 % Suma el valor de cada una de las cartas que tiene el jugador en su mano
 manoCartas([X|Y],S):-   
@@ -48,81 +60,82 @@ manoCartas([X|Y],S):-
    manoCartas(Y, M),
    S is P + M.
 
-% Devuelve la suma del valor total de la mano de los dos jugadores
-jugadores([X|Y], [Z|A]) :-
-  manoCartas([X|Y], S),
-  manoCartas([Z|A], T),
-  write("Jugador uno tiene  = "),
-  write(S),
-  write("\n"),
-  write("Jugador dos tiene  = "),
-  write(T).
+agregar(X, L, Lnueva):- append([X], L, Lnueva).
 
-
-
-% Añadir carta en la mano de un jugador de una en una
 pedirCarta([X|Y], P) :-
+  length([X|Y], Long), 
+  Long == 2,
   random(1,10,Num),
-  write("La carta que te ha salido es: "),
-  write(Num),
-  write("\n"),
   manoCartas([X|Y],S),
-  P is S + Num, 
-  resultado(P).
+  O is S + Num, 
+  resultado(O),
+  atomic_list_concat(Y, C),
+  atomics_to_string(["Tiene las siguientes cartas ", X, ", ", C, " y ", Num], P).
 
-% Plantarte y jugar con el dealer para ver quien a ganado
+pedirCarta([X|Y], P) :-
+  length([X|Y], Long),
+  Long =\= 2,
+  random(1,10,Num),
+  manoCartas([X|Y],S),
+  O is S + Num, 
+  resultado(O),
+  agregar(Num, [X|Y], Lnew),
+  atomic_list_concat(Lnew, C),
+  atomics_to_string(["Tiene la siguientes cartas: ", C], P). 
 
-plantar(Cartas) :-
- random(1,21, Res), 
- declararGanador(Cartas, Res).
+% Devuelve la suma del valor total de la mano de los dos jugadores
+% jugadores([X|Y], [Z|A]) :-
+%  manoCartas([X|Y], S),
+%  manoCartas([Z|A], T),
+%  write("Jugador uno tiene  = "),
+%  write(S),
+%  write("\n"),
+%  write("Jugador dos tiene  = "),
+%  write(T).
 
-declararGanador(Cartas, Res) :-
- Res < Cartas,
- write("Felicidades has ganado la ronda con "),
- write(Cartas),
- write("\n"), 
- write("El dealer tenia: "),
- write(Res),
- write("\n").
 
-declararGanador(Cartas, Res) :-
- Res >= Cartas,
- write("El dealer ha ganado con: "), 
- write("\n"),
- write(Res),
- write("\n"), 
- write("El jugador tenia: "),
- write(Cartas),
- write("\n").
+
+% declararGanador(Cartas, Res) :-
+% Res < Cartas,
+% write("Felicidades has ganado la ronda con "),
+% write(Cartas),
+% write("\n"), 
+% write("El dealer tenia: "),
+% write(Res),
+% write("\n").
+
+% declararGanador(Cartas, Res) :-
+% Res >= Cartas,
+% write("El dealer ha ganado con: "), 
+% write("\n"),
+% write(Res),
+% write("\n"), 
+% write("El jugador tenia: "),
+% write(Cartas),
+% write("\n").
 
 
 % Caso resulatdo trás pedir una carta
 resultado(M):-
   M >= 21,
-  M > 21 -> write("Suma más de 21. Has perdido");
-  M == 21 -> write("BlackJack");
-  write("Para seguir jugando introduce el comando pedirCarta().").
-  
+  M > 21 -> write("Suma más de 21. HAS PERDIDO!");
+  M == 21 -> write("BLACKJACK");
+  write("Para seguir jugando introduce el comando pedirCarta([Cartas],P) o plantate con el comando plantar([CartasJugador1], [CartasJugador2]).").
 
 % caso empate
-empate([X|Y], [Z|A]) :-
-  sum_list([X|Y], M),
-  sum_list([Z|A], P),
-  U is  (M - P),
-  U =:= 0 -> write("EMPATE!"), 
-  write("\n").
+plantar([X|Y], [Z|A]) :-
+  manoCartas([X|Y], Sol1),
+  manoCartas([Z|A], Sol2),
+  U is  (Sol1 - Sol2), 
+  U =:= 0 -> write("EMPATE!");
+  resultadoPuntos([X|Y], [Z|A]).
 
 % caso gana cuando ninguno de los dos jugadores llega a 21 
-ganaJugador([D|E], [F|G]) :-
-  sum_list([D|E], M),
-  sum_list([F|G], P),
-  M > P -> write("Ha ganado el jugador1!"),
-  M < P; write('Ha ganado el jugador 2! ').
-
-
- 
-
-
+ resultadoPuntos([D|E], [F|G]) :-
+  manoCartas([D|E], M),
+  manoCartas([F|G], P),
+  M > P -> write("Ha ganado el jugador1!");
+  write('Ha ganado el jugador 2! ').
 
     
 % Facts
