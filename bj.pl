@@ -6,7 +6,6 @@
 use_module(library(random)).
 
 
-
 % Comenzar el juego 
 comenzar() :-
 write("Bienvenido al juego BlackJack para empezar el juego tiene que escribir OK. en caso contrario escriba cualquier cosa"),
@@ -122,22 +121,37 @@ resultado(M):-
   M == 21 -> write("BLACKJACK");
   write("Para seguir jugando introduce el comando pedirCarta([Cartas],P) o plantate con el comando plantar([CartasJugador1], [CartasJugador2]).").
 
-% caso empate
-plantar([X|Y], [Z|A]) :-
-  manoCartas([X|Y], Sol1),
-  manoCartas([Z|A], Sol2),
-  U is  (Sol1 - Sol2), 
-  U =:= 0 -> write("EMPATE!");
-  resultadoPuntos([X|Y], [Z|A]).
 
 % caso gana cuando ninguno de los dos jugadores llega a 21 
- resultadoPuntos([D|E], [F|G]) :-
-  manoCartas([D|E], M),
-  manoCartas([F|G], P),
+ ganadorSegunPuntos(M, P) :-
   M > P -> write("Ha ganado el jugador1!");
   write('Ha ganado el jugador 2! ').
 
-    
+% Comprobar si uno de los dos numeros es un 21
+comprabarNumero(X,Y) :-
+  X =:= 21 -> write("El jugador 1 ha reaizado BLACKJACK");
+  Y =:= 21 -> write("El jugador 2 ha reaizado BLACKJACK");
+  ganadorSegunPuntos(X,Y).
+
+% caso empate
+empate(Sol1, Sol2) :-
+  U is  (Sol1 - Sol2), 
+  U =:= 0 -> write("EMPATE!");
+  comprabarNumero(Sol1, Sol2).
+
+% Se comprueba que el número de cartas de ambos jugadores es el mismo sino no te puedes plantar
+plantar([X|Y],[E|D]):-
+  length([X|Y],S),
+  length([E|D],S1),
+  S =:= S1 -> plantar1([X|Y],[E|D]);
+  write("El numero de cartas de ambos jugadores no es el mismo").
+
+
+plantar1([X|Y],[E|D]) :-
+  manoCartas([X|Y], S),
+  manoCartas([E|D], T),
+  empate(S,T).
+
 % Facts
 
 correcto("OK").
