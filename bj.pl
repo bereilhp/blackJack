@@ -7,11 +7,13 @@ use_module(library(random)).
 
 
 % Comenzar el juego 
-comenzar() :-
-write("Bienvenido al juego BlackJack para empezar el juego tiene que escribir 'ok'. en caso contrario escriba cualquier cosa"),
+iniciarJuego() :-
+write("Bienvenido al juego BlackJack para empezar el juego tiene que escribir "),
+format("\"ok\"", []),
+write(". en caso contrario escriba cualquier cosa"),
 nl,
 read(S),
-correcto(S) -> write("Para seguir jugando ejecute el comando mano1(X,Y,S) o mano2(X,Y,S)y te mostrará tu primera mano");
+correcto(S) -> write("Para seguir jugando ejecute el comando mano1(X,Y,S) y te mostrará tu primera mano");
   write("Ha finalizado el juego").
 
 % Este predicado te devuelve el  valor de cada carta
@@ -20,7 +22,6 @@ carta(X,S) :-
 
 % Cuando el jugador no tiene cartas en la mano
 manoCartas([],0).
-
 
 % Genera cartas aleatorias
 random_Cards(Num) :-
@@ -44,7 +45,8 @@ mano1(Num, Nm, S) :-
   carta2(T),
   cartas(T, Nm),
   Resu is Num + Nm,
-  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para seguir jugando inserte el comando pedirCarta([cartas], P)"], S).
+  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para pedir otra carta y seguir jugando inserte el comando pedirCarta([Carta1, Carta2])"], S).
+ 
 
 mano2(Num, Nm, S) :-
   carta1(N),
@@ -52,7 +54,7 @@ mano2(Num, Nm, S) :-
   carta2(T),
   cartas(T, Nm),
   Resu is Num + Nm,
-  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para seguir jugando inserte el comando pedirCarta([cartas], P)"], S).
+  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para seguir jugando inserte el comando pedirCarta([cartas])"], S).
 
 
 % Suma el valor de cada una de las cartas que tiene el jugador en su mano
@@ -96,7 +98,7 @@ resultado(M):-
   M >= 21,
   M > 21 -> write("Suma más de 21. HAS PERDIDO!");
   M == 21 -> write("BLACKJACK");
-  write("Para plantarse use el comando plantar([CartasJugador1], [CartasJugador2]).").
+  write("Para plantarse use el comando plantar(SumCartas).").
 
 
 % Comprobar si uno de los dos numeros es un 21
@@ -148,7 +150,7 @@ ganadorSegunPuntosDealer2(X, Dealer) :-
   write("El dealer ha ganado al jugador 2.").
 
 plantar(Carta) :-
-  random(18,21, Num),
+  random(16,21, Num),
   plantar1(Carta, Num).
 
 plantar1(Carta, Num) :-
