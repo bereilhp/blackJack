@@ -1,4 +1,4 @@
-% Rules
+%Rules
 % ; = OR
 % , = AND
 
@@ -8,11 +8,11 @@ use_module(library(random)).
 
 % Comenzar el juego 
 comenzar() :-
-write("Bienvenido al juego BlackJack para empezar el juego tiene que escribir OK. en caso contrario escriba cualquier cosa"),
+write("Bienvenido al juego BlackJack para empezar el juego tiene que escribir 'ok'. en caso contrario escriba cualquier cosa"),
 nl,
 read(S),
-correcto(S) -> write("Para seguir jugando ejecute el comando manoCartasInicialJugador1(X,Y,S) o manoCartasInicialJugador2(X,Y,S)y te mostrará tu primera mano");
-  write("Ha finalizado el juego"). 
+correcto(S) -> write("Para seguir jugando ejecute el comando mano1(X,Y,S) o mano2(X,Y,S)y te mostrará tu primera mano");
+  write("Ha finalizado el juego").
 
 % Este predicado te devuelve el  valor de cada carta
 carta(X,S) :-
@@ -38,19 +38,21 @@ carta2(Num) :-
   cartas(N, Num).
 
 % El jugador al principio solo tendra dos cartas
-manoCartasInicialJugador1(Num, Nm, S) :-
+mano1(Num, Nm, S) :-
   carta1(N),
   cartas(N, Num),
   carta2(T),
   cartas(T, Nm),
-  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, ". Para seguir jugando inserte el comando pedirCarta([cartas], P)"], S).
+  Resu is Num + Nm,
+  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para seguir jugando inserte el comando pedirCarta([cartas], P)"], S).
 
-manoCartasInicialJugador2(Num, Nm, S) :-
+mano2(Num, Nm, S) :-
   carta1(N),
   cartas(N, Num),
   carta2(T),
   cartas(T, Nm),
-  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, ". Para seguir jugando inserte el comando pedirCarta([Cartas], P)"], S).
+  Resu is Num + Nm,
+  atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para seguir jugando inserte el comando pedirCarta([cartas], P)"], S).
 
 
 % Suma el valor de cada una de las cartas que tiene el jugador en su mano
@@ -61,57 +63,32 @@ manoCartas([X|Y],S):-
 
 agregar(X, L, Lnueva):- append([X], L, Lnueva).
 
-pedirCarta([X|Y], P) :-
+pedirCarta([X|Y]) :-
   length([X|Y], Long), 
   Long == 2,
   random(1,10,Num),
   manoCartas([X|Y],S),
   O is S + Num, 
-  resultado(O),
+  write("Te ha salido la carta = "),
+  write(Num),
+  nl, 
   atomic_list_concat(Y, C),
-  atomics_to_string(["Tiene las siguientes cartas ", X, ", ", C, " y ", Num], P).
+  atomics_to_string(["Tiene las siguientes cartas ", X, ", ", C, " y ", Num, " y su suma es ", O, "." ], B),
+  write(B),
+  nl,
+  resultado(O),
+  !.
 
-pedirCarta([X|Y], P) :-
+pedirCarta([X|Y]) :-
   length([X|Y], Long),
   Long =\= 2,
   random(1,10,Num),
   manoCartas([X|Y],S),
   O is S + Num, 
   resultado(O),
-  agregar(Num, [X|Y], Lnew),
-  atomic_list_concat(Lnew, C),
-  atomics_to_string(["Tiene la siguientes cartas: ", C], P). 
-
-% Devuelve la suma del valor total de la mano de los dos jugadores
-% jugadores([X|Y], [Z|A]) :-
-%  manoCartas([X|Y], S),
-%  manoCartas([Z|A], T),
-%  write("Jugador uno tiene  = "),
-%  write(S),
-%  write("\n"),
-%  write("Jugador dos tiene  = "),
-%  write(T).
-
-
-
-% declararGanador(Cartas, Res) :-
-% Res < Cartas,
-% write("Felicidades has ganado la ronda con "),
-% write(Cartas),
-% write("\n"), 
-% write("El dealer tenia: "),
-% write(Res),
-% write("\n").
-
-% declararGanador(Cartas, Res) :-
-% Res >= Cartas,
-% write("El dealer ha ganado con: "), 
-% write("\n"),
-% write(Res),
-% write("\n"), 
-% write("El jugador tenia: "),
-% write(Cartas),
-% write("\n").
+  nl,
+  atomics_to_string(["La nueva carta tras pedir es " , Num , ". El nuevo total de sus caras es ", O, "."], P),
+  write(P). 
 
 
 % Caso resulatdo trás pedir una carta
@@ -119,42 +96,85 @@ resultado(M):-
   M >= 21,
   M > 21 -> write("Suma más de 21. HAS PERDIDO!");
   M == 21 -> write("BLACKJACK");
-  write("Para seguir jugando introduce el comando pedirCarta([Cartas],P) o plantate con el comando plantar([CartasJugador1], [CartasJugador2]).").
+  write("Para plantarse use el comando plantar([CartasJugador1], [CartasJugador2]).").
 
-
-% caso gana cuando ninguno de los dos jugadores llega a 21 
- ganadorSegunPuntos(M, P) :-
-  M > P -> write("Ha ganado el jugador1!");
-  write('Ha ganado el jugador 2! ').
 
 % Comprobar si uno de los dos numeros es un 21
-comprabarNumero(X,Y) :-
-  X =:= 21 -> write("El jugador 1 ha reaizado BLACKJACK");
-  Y =:= 21 -> write("El jugador 2 ha reaizado BLACKJACK");
-  ganadorSegunPuntos(X,Y).
+comprabarNumero(X,Y,Random) :-
+  empateJugador1(X, Random),
+  nl,
+  empateJugador2(Y, Random),
+  nl,
+  write("El dealer tiene "),
+  write(Random).
+
+plantar(Carta1, Carta2) :-
+  random(18,21, Num),
+  plantar2(Carta1, Carta2, Num).
 
 % caso empate
-empate(Sol1, Sol2) :-
-  U is  (Sol1 - Sol2), 
-  U =:= 0 -> write("EMPATE!");
-  comprabarNumero(Sol1, Sol2).
+plantar2(Sol1, Sol2, Num) :-
+  U is  (Sol1 - Num),
+  U =:= 0 -> write("Empate entre jugador 1 y Dealer con "),
+  write(Num),
+  nl,
+  empateJugador1(Sol1, Sol2),
+  nl,
+  write("Jugador 2 tenía "),
+  write(Sol2); 
+  (Sol2 - Num) =:= 0 -> write("Empate entre jugador 2 y Dealer con suma "),
+  write(Num),
+  nl,
+  empateJugador2(Sol1, Sol2),
+  nl,
+  write("Jugador 1 tenía "),
+  write(Sol1);
+  comprabarNumero(Sol1, Sol2, Num).
 
-% Se comprueba que el número de cartas de ambos jugadores es el mismo sino no te puedes plantar
-plantar([X|Y],[E|D]):-
-  length([X|Y],S),
-  length([E|D],S1),
-  S =:= S1 -> plantar1([X|Y],[E|D]);
-  write("El numero de cartas de ambos jugadores no es el mismo").
+empateJugador1(X, Y) :-
+  X < Y -> write("Jugador 1 ha perdido");
+  write("Jugador 1 ha ganado!").
 
+empateJugador2(X, Y) :-
+  X < Y -> write("Jugador 2 ha perdido");
+  write("Jugador 2 ha ganado!").
 
-plantar1([X|Y],[E|D]) :-
-  manoCartas([X|Y], S),
-  manoCartas([E|D], T),
-  empate(S,T).
+ganadorSegunPuntosDealer1(X, Dealer) :-
+  X > Dealer -> write("Jugador 1 han ganado.");
+  write("El dealer ha ganado al jugador 1.").
 
-% Facts
+ganadorSegunPuntosDealer2(X, Dealer) :-
+  X > Dealer -> write("Jugador 2 han ganado.");
+  write("El dealer ha ganado al jugador 2.").
 
-correcto("OK").
+plantar(Carta) :-
+  random(18,21, Num),
+  plantar1(Carta, Num).
+
+plantar1(Carta, Num) :-
+ U is (Carta - Num),
+ U =:= 0 -> write("Empate entre el dealer y jugador con cartas = "),
+ write(Carta);
+comprabarDealerJugador(Carta, Num).
+
+comprabarDealerJugador(X,Y) :-
+  X =:= 21 -> write("Has conseguido BLACKJACK");
+  Y =:= 21 -> write("El Dealer ha conseguido BLACKJACK");
+  ganadorPuntosDealerJugador(X,Y).
+
+ganadorPuntosDealerJugador(M, P) :-
+  M > P -> write("Has ganado! "), 
+  nl,
+  atomics_to_string(["El jugador tenía ", M, ", y el dealer ", P, "."], B), 
+  write(B);
+  write('Ha ganado el Dealer! '),
+  nl,
+  atomics_to_string(["El jugador tenía ", M, ", y el dealer ", P, "."], T), 
+  write(T).
+
+%Facts
+
+correcto("ok").
 cartas(1,1). % Carta y su valor
 cartas(2,2).
 cartas(3,3).
