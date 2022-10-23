@@ -1,5 +1,7 @@
 # Documentación para BlackJack usando prolog
 
+Hecho por: María Calvo Torres y Pedro Bereilh
+
 ## Prerequisitos 
 - Tener instalado swipl en nuestro caso es la version 8.4.3. Se puede comprobar utilizando el siguiente comando:
 
@@ -14,6 +16,23 @@ swipl --version
 ```
 swipl bj.pl
 ```
+
+# ¿Qué es BlackJack?
+
+- El Blackjack, también llamado veintiuno, es un juego de cartas, propio de los casinos con una o más barajas inglesas de 52 cartas sin los comodines, que consiste en sumar un valor lo más próximo a 21 pero sin pasarse.
+
+## Reglas 
+
+- Se utiliza una baraja inglesa. 
+- El As vale 1, las figuras (J,Q,K) valen 10 y el resto de cartas valen su propio valor.
+- Se empieza con dos cartas aleatoria.
+- Se pueden pedir al dealer más cartas.
+- Cuando te acercas al 21 te puedes plantar.
+- Puede realizar un BlackJack y ganar automaticamente que consiste en sumar 21. 
+- Si te pasas de 21 pierdes. 
+- Si al plantarte no tienes 21 se compara con la mano del dealer y del otro jugador si lo hay. 
+- Puede darse el caso de empate si la suma de un jugador es la misma que la de un dealer.
+
 
 # Un jugador contra el Dealer
 
