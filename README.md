@@ -31,7 +31,7 @@ swipl bj.pl
 - Puede realizar un BlackJack y ganar automaticamente que consiste en sumar 21. 
 - Si te pasas de 21 pierdes. 
 - Si al plantarte no tienes 21 se compara con la mano del dealer y del otro jugador si lo hay. 
-- Puede darse el caso de empate si la suma de un jugador es la misma que la de un dealer.
+- Puede darse el caso de empate si la suma de un jugador es la misma que la del dealer.
 
 
 # Un jugador contra el Dealer
