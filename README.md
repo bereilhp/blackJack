@@ -21,7 +21,7 @@ swipl bj.pl
 
 - El Blackjack, también llamado veintiuno, es un juego de cartas, propio de los casinos con una o más barajas inglesas de 52 cartas sin los comodines, que consiste en sumar un valor lo más próximo a 21 pero sin pasarse.
 
-- En nuestro juego vamos a tener una baraja inglesa. Se podrá jugar solo enfrentándose al dealer o con dos jugadores enfrentándose al dealer. El objetivo de este juego es realizar un BlackJack, es decir, sumar 21. Si ningún jugador consigue 21 ganará el que más se acerque a 21 y si se pasa automáticamente perderá.
+- En nuestro juego vamos a tener una baraja inglesa. Se podrá jugar con solo un jugador enfrentándose al dealer o con dos jugadores enfrentándose al dealer. El objetivo de este juego es realizar un BlackJack, es decir, sumar 21. Si ningún jugador consigue 21 ganará el que más se acerque a 21 y si se pasa automáticamente perderá.
 
 [Más información sobre BlackJack](http://www.ete.enp.unam.mx/como_jugar_Blackjack.pdf)
 
