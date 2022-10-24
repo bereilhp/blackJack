@@ -38,7 +38,7 @@ carta2(Num) :-
   random(1, 10, N),
   cartas(N, Num).
 
-% Genera la primeramano. Esta mano consta de dos cartas y te muestra el valor de las mismas y los puntos totales. 
+% Genera la primera mano. Esta mano consta de dos cartas y te muestra el valor de las mismas y los puntos totales. 
 mano1(Num, Nm, S) :-
   carta1(N),
   cartas(N, Num),
@@ -47,7 +47,7 @@ mano1(Num, Nm, S) :-
   Resu is Num + Nm,
   atomics_to_string(["Tiene las siguientes cartas en la mano: ", Num," y ", Nm, " y su total es ", Resu, ". Para pedir otra carta y seguir jugando inserte el comando pedirCarta([Carta1, Carta2])"], S).
  
-% Genera la primeramano. Esta mano consta de dos cartas y te muestra el valor de las mismas y los puntos totales. 
+% Genera la primera mano. Esta mano consta de dos cartas y te muestra el valor de las mismas y los puntos totales. 
 mano2(Num, Nm, S) :-
   carta1(N),
   cartas(N, Num),
@@ -84,7 +84,7 @@ pedirCarta([X|Y]) :-
   resultado(O),
   !.
 
-% Este predicado de ejecuta cuando la mano del jugador tiene 3 o mas cartas y te muestra las cartas que tiene el jugador en la mano 
+% Este predicado se ejecuta cuando la mano del jugador tiene 3 o mas cartas y te muestra las cartas que tiene el jugador en la mano 
 % y el total de puntos que esta genera.
 pedirCarta([X|Y]) :-
   length([X|Y], Long),
@@ -98,8 +98,8 @@ pedirCarta([X|Y]) :-
   write(P). 
 
 
-% Este predicado comprueba que tras obtener una nueva carta, el total de mano del jugador supera los 21 puntos, 
-% en ese caso el jugador ha perdido inmediatamente o si el valor de su mano es 21 ha realizado BlackJack y por lo tanto ha ganao la partida.
+% Este predicado comprueba que tras obtener una nueva carta, el valor total de la mano del jugador supera los 21 puntos, 
+% en ese caso el jugador ha perdido inmediatamente o si el valor de su mano es 21 ha realizado BlackJack y por lo tanto ha ganado la partida.
 resultado(M):-
   M >= 21,
   M > 21 -> write("Suma más de 21. HAS PERDIDO!");
@@ -116,7 +116,7 @@ comprabarNumero(X,Y,Random) :-
   write("El dealer tiene "),
   write(Random).
 
-% En el caso de jugar dos jugadores contra el dealer, este predicado comprueba si hay empatado entre uno de los jugadores con el dealer. 
+% En el caso de jugar dos jugadores contra el dealer, este predicado comprueba si hay un empate entre uno de los jugadores con el dealer. 
 % y te muestra si el jugador que no ha quedado empate gana o pierde. 
 plantar(Carta1, Carta2) :-
   random(18,21, Num),
