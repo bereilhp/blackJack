@@ -155,7 +155,7 @@ pedirCarta([Carta1, Carta2]).
 ```
 - Este predicado te devolverá la nueva carta aleatoria y se sumará con el resto de cartas que tienes en la mano. 
 
-- Como podemos observar a continuación, tenemos que pedir cartas para cada jugador ya qu etienen manos diferentes y son independientes. 
+- Como podemos observar a continuación, tenemos que pedir cartas para cada jugador ya que tienen manos diferentes y son independientes. 
 
 - Como es el mismo predicado aplican las mismas reglas que en el caso anterior. 
 
