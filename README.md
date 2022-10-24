@@ -173,15 +173,21 @@ plantar(18,15).
 - Hay tres resultados posibles que son: empate, perder y ganar. 
 - Cuando un jugador y el dealer tienen la misma suma de cartas, se denomina empate. 
 
+Ejemplo
+
 ![plot](./imagenes/EmpateDealerJugador2.png)
 
 ![plot](./imagenes/EmpateJugador1Dealer.png)
 
 
-- Cuando el jugador tiene una suma de cartas mayor que el dealer, significa que el jugador ha gando esa ronda. 
+- Cuando el jugador tiene una suma de cartas mayor que el dealer, significa que el jugador ha gando esa ronda.
+
+Ejemplo
 
 ![plot](./imagenes/Jugador2GanaDealer.png)
 
 - Por último, si el dealer tiene una suma de cartas mayor que los jugadores, significa que el dealer ha ganado 
+
+Ejemplo
 
 ![plot](./imagenes/plantar2GanaDealer.png)
