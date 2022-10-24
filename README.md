@@ -1,4 +1,4 @@
-# Documentación para BlackJack usando prolog
+# Documentación juego BlackJack con prolog
 
 Hecho por: María Calvo Torres y Pedro Bereilh
 
@@ -10,8 +10,8 @@ swipl --version
 ```
 
 ## Abrir el fichero de prolog 
+- Clonar este repositorio
 - Abrir el directorio donde esta el fichero bj.pl
-
 - Para ejecutar el juego usar el siguiente comando: 
 ```
 swipl bj.pl
@@ -20,6 +20,8 @@ swipl bj.pl
 # ¿Qué es BlackJack?
 
 - El Blackjack, también llamado veintiuno, es un juego de cartas, propio de los casinos con una o más barajas inglesas de 52 cartas sin los comodines, que consiste en sumar un valor lo más próximo a 21 pero sin pasarse.
+
+[Más información sobre BlackJack](http://www.ete.enp.unam.mx/como_jugar_Blackjack.pdf)
 
 ## Reglas 
 
