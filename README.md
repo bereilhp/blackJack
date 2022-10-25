@@ -1,4 +1,4 @@
-# Documentación juego BlackJack con prolog
+# Documentación juego BlackJack utilizando prolog
 
 Hecho por: María Calvo Torres y Pedro Bereilh
 
