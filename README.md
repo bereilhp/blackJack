@@ -1,4 +1,6 @@
-# Documentación juego BlackJack utilizando prolog
+# Documentación juego BlackJack
+
+Recreación del juego BlackJack programado utilizando el lenguaje prolog
 
 Hecho por: María Calvo Torres y Pedro Bereilh
 
